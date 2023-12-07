@@ -42,23 +42,23 @@ Main:
 	MOV R4, #0x03
 
 	CALL CountOnes	; a feladat elvegzese, az eredmeny az R6 regiszterben lathato
-	JMP $			; vegtelen ciklusban varunk
+	JMP $		; vegtelen ciklusban varunk
 
 ; -----------------------------------------------------------
 ; CountOnes szubrutin
 ; -----------------------------------------------------------
 ; Funkció:	Az 1-esek szamanak megallapitasa az R1-R4 regiszterekben
 ; Bementek:	R0 - pointer (R1-R4 regiszterekre), egyben a hatralevo regiszterek szama
-;			R1-R4 - 32-bites szam (4x8 biten)
-;			R5 - a vizsgalt bit sorszáma az ACC-ban (8:MSB->1:LSB)
+;		R1-R4 - 32-bites szam (4x8 biten)
+;		R5 - a vizsgalt bit sorszáma az ACC-ban (8:MSB->1:LSB)
 ; Regisztereket modositja:
-;			A, R0, R5, R6
+;		A, R0, R5, R6
 ; Kimenet:	R6 - 1-esek szama
 ; -----------------------------------------------------------
 
 CountOnes:
 	MOV A, @R0	; az RLC muvelet csak az ACC erteken vegezheto el
-				; betoltjuk az ACC-ba az R0-ban tarolt cimen talalhato erteket
+			; betoltjuk az ACC-ba az R0-ban tarolt cimen talalhato erteket
 
 Loop:
 	RLC A		; a kovetkezo vizsgalando bitet betoltjuk a CY-be
@@ -69,6 +69,6 @@ Skip:
 	DJNZ R5, Loop		; ha nem vizsgaltuk meg az adott regiszter osszes bitjet, megnezzuk a kovetkezot
 	MOV R5, #0x08		; ha a regiszter osszes bitjet megvizsgaltuk, alaphelyzetbe allitjuk a bitszamlalot
 	DJNZ R0, CountOnes	; ha van olyan regiszter, amit meg nem vizsgaltunk meg
-	RET					; vissszaterunk a foprogramba
+	RET			; vissszaterunk a foprogramba
 
 END
